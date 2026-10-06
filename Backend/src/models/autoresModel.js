@@ -1,6 +1,6 @@
 const db = require("../config/database");
 
-const buscartodos = async () =>{
+const buscarTodos = async () =>{
     const[autores] = await db.query(
         "SELECT * FROM autores"
     );
@@ -55,7 +55,7 @@ const excluir = async (id) => {
 }
 
 module.exports = {
-    buscartodos,
+    buscarTodos,
     buscarPorID,
     criar,
     editar,

@@ -1,7 +1,8 @@
 const autoresModel = require("../models/autoresModel");
 
 const buscarAutores = async (req, res) => {
-    const autores = await autoresModel.buscartodos();
+    const autores = await autoresModel.buscarTodos();
+    console.log(autores);
 
     res.json(autores);
 };
