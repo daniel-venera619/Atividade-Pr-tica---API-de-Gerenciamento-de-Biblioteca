@@ -42,6 +42,7 @@ npm install
 
 ## Caso seja necessário instalar manualmente:
 npm install express mysql2 dotenv
+---
 
 ## ⚙️ Configuração
 Na raiz do projeto, crie um arquivo chamado:
@@ -83,8 +84,8 @@ usuarios
 emprestimos
 autores_has_livros
 livros_has_generos
-
-Relacionamento entre autores e livros
+---
+### Relacionamento entre autores e livros
 autores
     ↓
 autores_has_livros
