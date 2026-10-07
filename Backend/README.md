@@ -1,70 +1,59 @@
-📚 API Biblioteca
-📌 Sobre o projeto
+# 📚 API Biblioteca
+
+## 📌 Sobre o projeto
 
 Este projeto consiste em uma API REST para gerenciamento de uma biblioteca.
 
 A API permite realizar operações de cadastro, consulta, atualização e exclusão de:
 
-Autores
+- Autores
+- Livros
+- Gêneros
+- Usuários
+- Empréstimos
 
-Livros
+O projeto utiliza uma arquitetura organizada em **Models, Controllers e Routes**.
 
-Gêneros
+Também são utilizados relacionamentos entre as tabelas do banco de dados por meio de `INNER JOIN`.
 
-Usuários
+---
 
-Empréstimos
+## 🛠️ Tecnologias
 
-O projeto utiliza uma arquitetura organizada em Models, Controllers e Routes.
+- Node.js
+- vscode
+- Express
+- MySQL
+- MySQL2
+- JavaScript
+- dotenv
+    dotenv": "^18.0.5",
+        "express": "^5.2.1",
+        "mysql2": "^3.24.5",
+        "node": "^22.23.3",
+        "nodemon": "^3.1.14"
+- Postman ou Insomnia
 
-Também são utilizados relacionamentos entre as tabelas do banco de dados por meio de INNER JOIN.
+---
 
-🛠️ Tecnologias
+## 📦 Instalação
 
-Node.js ^22.23.3
-
-Visual Studio Code
-
-Express ^5.2.1
-
-MySQL
-
-MySQL2 ^3.24.5
-
-JavaScript
-
-dotenv ^18.0.5
-
-Nodemon ^3.1.14
-
-Postman ou Insomnia
-
-📦 Instalação
-1. Clonar o projeto
+### 1. Clonar o projeto
+bash
 git clone URL_DO_REPOSITORIO
-
-2. Entrar na pasta do projeto
+### 2. Entrar na pasta do projeto
 cd biblioteca
-
-3. Instalar as dependências
+### 3. Instalar as dependências
 npm install
 
-
-Caso seja necessário instalar manualmente:
-
+## Caso seja necessário instalar manualmente:
 npm install express mysql2 dotenv
 
+---
 
-Para instalar o Nodemon:
-
-npm install --save-dev nodemon
-
-⚙️ Configuração
-
+## ⚙️ Configuração
 Na raiz do projeto, crie um arquivo chamado:
-
 .env
-
 
 Adicione as configurações do banco de dados:
 
@@ -73,7 +62,6 @@ DB_USER=root
 DB_PASSWORD=sua_senha
 DB_NAME=biblioteca
 DB_PORT=3306
-
 
 Altere os valores de acordo com a configuração do MySQL da sua máquina.
 
@@ -84,7 +72,7 @@ Adicione ao .gitignore:
 .env
 node_modules/
 
-🗄️ Banco de dados
+## 🗄️ Banco de dados
 
 O projeto utiliza o banco de dados MySQL.
 
@@ -92,28 +80,19 @@ Nome do banco:
 
 biblioteca
 
-
 Para criar o banco, execute o arquivo SQL disponibilizado no projeto.
-
-Tabelas
 
 O banco possui as seguintes tabelas:
 
 autores
-
 livros
-
 generos
-
 usuarios
-
 emprestimos
-
 autores_has_livros
-
 livros_has_generos
 
-Relacionamento entre autores e livros
+### Relacionamento entre autores e livros
 autores
     ↓
 autores_has_livros
@@ -134,7 +113,7 @@ emprestimos
     ↓
 livros
 
-🔗 INNER JOIN
+## 🔗 INNER JOIN
 
 O projeto utiliza INNER JOIN para consultar informações relacionadas entre as tabelas.
 
@@ -177,7 +156,7 @@ INNER JOIN usuarios
 INNER JOIN livros
     ON emprestimos.LIVROS_id = livros.id;
 
-▶️ Execução
+## ▶️ Execução
 
 Após instalar as dependências e configurar o banco de dados, execute a aplicação.
 
@@ -191,11 +170,6 @@ Ou, caso exista o script start no package.json:
 npm start
 
 
-Se estiver utilizando Nodemon:
-
-npx nodemon server.js
-
-
 A API estará disponível em:
 
 http://localhost:3000
@@ -205,31 +179,23 @@ http://localhost:3000
 Listar autores
 
 GET
-
 /autores
 
-
 Retorna todos os autores cadastrados.
-
 Buscar autor por ID
 
 GET
-
 /autores/:id
 
-
 Parâmetro:
-
 id - ID do autor
 
 
 Exemplo:
-
 GET /autores/1
 
 
 Exemplo de resposta:
-
 {
     "id": 1,
     "nome_completo": "Machado de Assis",
@@ -240,9 +206,7 @@ Exemplo de resposta:
 Criar autor
 
 POST
-
 /autores
-
 
 Corpo da requisição:
 
@@ -255,17 +219,14 @@ Corpo da requisição:
 Atualizar autor
 
 PUT
-
 /autores/:id
 
 
 Exemplo:
-
 PUT /autores/1
 
 
 Corpo:
-
 {
     "nome_completo": "Machado de Assis",
     "nacionalidade": "Brasileira",
@@ -275,26 +236,21 @@ Corpo:
 Excluir autor
 
 DELETE
-
 /autores/:id
 
 
 Exemplo:
-
 DELETE /autores/1
 
-📖 Livros
+## 📖 Livros
 Listar livros
 
 GET
-
 /livros
-
 
 Retorna os livros cadastrados, juntamente com informações relacionadas aos autores e gêneros utilizando INNER JOIN.
 
 Exemplo de resposta:
-
 {
     "id": 1,
     "titulo": "Dom Casmurro",
@@ -309,23 +265,19 @@ Exemplo de resposta:
 Buscar livro por ID
 
 GET
-
 /livros/:id
 
 
 Parâmetro:
-
 id - ID do livro
 
 
 Exemplo:
-
 GET /livros/1
 
 Criar livro
 
 POST
-
 /livros
 
 
@@ -342,17 +294,14 @@ Corpo da requisição:
 Atualizar livro
 
 PUT
-
 /livros/:id
 
 
 Exemplo:
-
 PUT /livros/1
 
 
 Corpo:
-
 {
     "titulo": "Dom Casmurro",
     "isbn": "9788535910663",
@@ -364,19 +313,16 @@ Corpo:
 Excluir livro
 
 DELETE
-
 /livros/:id
 
 
 Exemplo:
-
 DELETE /livros/1
 
-🏷️ Gêneros
+## 🏷️ Gêneros
 Listar gêneros
 
 GET
-
 /generos
 
 
@@ -385,23 +331,19 @@ Retorna todos os gêneros cadastrados.
 Buscar gênero por ID
 
 GET
-
 /generos/:id
 
 
 Exemplo:
-
 GET /generos/1
 
 Criar gênero
 
 POST
-
 /generos
 
 
 Corpo da requisição:
-
 {
     "nome": "Romance"
 }
@@ -409,17 +351,14 @@ Corpo da requisição:
 Atualizar gênero
 
 PUT
-
 /generos/:id
 
 
 Exemplo:
-
 PUT /generos/1
 
 
 Corpo:
-
 {
     "nome": "Romance"
 }
@@ -427,43 +366,34 @@ Corpo:
 Excluir gênero
 
 DELETE
-
 /generos/:id
 
 
 Exemplo:
-
 DELETE /generos/1
 
-👤 Usuários
+## 👤 Usuários
 Listar usuários
 
 GET
-
 /usuarios
-
 
 Retorna todos os usuários cadastrados.
 
 Buscar usuário por ID
 
 GET
-
 /usuarios/:id
 
 
 Parâmetro:
-
 id - ID do usuário
 
 
 Exemplo:
-
 GET /usuarios/1
 
-
 Exemplo de resposta:
-
 {
     "id": 1,
     "nome_completo": "João da Silva",
@@ -476,12 +406,10 @@ Exemplo de resposta:
 Criar usuário
 
 POST
-
 /usuarios
 
 
 Corpo da requisição:
-
 {
     "nome_completo": "Carlos Silva",
     "cpf": "111.222.333-44",
@@ -493,17 +421,14 @@ Corpo da requisição:
 Atualizar usuário
 
 PUT
-
 /usuarios/:id
 
 
 Exemplo:
-
 PUT /usuarios/1
 
 
 Corpo:
-
 {
     "nome_completo": "João da Silva Santos",
     "cpf": "123.456.789-00",
@@ -515,19 +440,16 @@ Corpo:
 Excluir usuário
 
 DELETE
-
 /usuarios/:id
 
 
 Exemplo:
-
 DELETE /usuarios/1
 
-📚 Empréstimos
+## 📚 Empréstimos
 Listar empréstimos
 
 GET
-
 /emprestimos
 
 
@@ -536,7 +458,6 @@ Retorna os empréstimos cadastrados.
 A consulta utiliza INNER JOIN para mostrar o nome do usuário e o título do livro.
 
 Exemplo de resposta:
-
 {
     "id": 2,
     "data_emprestimos": "2026-03-10",
@@ -548,28 +469,23 @@ Exemplo de resposta:
 Buscar empréstimo por ID
 
 GET
-
 /emprestimos/:id
 
 
 Parâmetro:
-
 id - ID do empréstimo
 
 
 Exemplo:
-
 GET /emprestimos/1
 
 Criar empréstimo
 
 POST
-
 /emprestimos
 
 
 Corpo da requisição:
-
 {
     "data_emprestimos": "2026-10-06",
     "data_devolucao": null,
@@ -580,17 +496,13 @@ Corpo da requisição:
 Atualizar empréstimo
 
 PUT
-
 /emprestimos/:id
 
 
 Exemplo:
-
 PUT /emprestimos/2
 
-
 Corpo:
-
 {
     "data_emprestimos": "2026-10-06",
     "data_devolucao": "2026-10-20",
@@ -601,15 +513,13 @@ Corpo:
 Excluir empréstimo
 
 DELETE
-
 /emprestimos/:id
 
 
 Exemplo:
-
 DELETE /emprestimos/1
 
-📋 Resumo dos endpoints
+## 📋 Resumo dos endpoints
 Método	Endpoint	Finalidade
 GET	/autores	Listar autores
 GET	/autores/:id	Buscar autor por ID
@@ -636,7 +546,8 @@ GET	/emprestimos/:id	Buscar empréstimo por ID
 POST	/emprestimos	Criar empréstimo
 PUT	/emprestimos/:id	Atualizar empréstimo
 DELETE	/emprestimos/:id	Excluir empréstimo
-👨‍💻 Estrutura do projeto
+
+## 👨‍💻 Estrutura do projeto
 biblioteca/
 │
 ├── config/
@@ -669,6 +580,6 @@ biblioteca/
 ├── server.js
 └── README.md
 
-✅ Status do projeto
+## ✅ Status do projeto
 
 Projeto desenvolvido para fins acadêmicos, com implementação de uma API REST para gerenciamento de uma biblioteca utilizando Node.js, Express e MySQL.
