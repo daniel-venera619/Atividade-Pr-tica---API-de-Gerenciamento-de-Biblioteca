@@ -8,6 +8,7 @@ const buscarEmprestimos = async (req, res) => {
 
 const buscarEmprestimoPorId = async (req, res) => {
     const id = req.params.id;
+    const emprestimo = await emprestimosModel.buscarPorID(id);
 
     if (!emprestimo) {
         return res.status(404).json({

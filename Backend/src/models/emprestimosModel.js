@@ -1,21 +1,44 @@
 const db = require("../config/database");
 
 const buscarTodos = async () => {
-    const [emprestimos] = await db.query(
-        "SELECT * FROM emprestimos"
-    );
+    const [emprestimos] = await db.query(`
+        SELECT
+            emprestimos.id,
+            emprestimos.data_emprestimos,
+            emprestimos.data_devolucao,
+            usuarios.nome_completo,
+            livros.titulo
+        FROM emprestimos
+        INNER JOIN usuarios
+            ON emprestimos.USUARIOS_id = usuarios.id
+        INNER JOIN livros
+            ON emprestimos.LIVROS_id = livros.id
+    `);
 
     return emprestimos;
 };
 
 const buscarPorID = async (id) => {
-    const [emprestimos] = await db.query(
-        "SELECT * FROM emprestimos WHERE id = ?",
-        [id] 
-    )
+    const [emprestimos] = await db.query(`
+        SELECT
+            emprestimos.id,
+            emprestimos.data_emprestimos,
+            emprestimos.data_devolucao,
+            emprestimos.USUARIOS_id,
+            emprestimos.LIVROS_id,
+            usuarios.nome_completo,
+            livros.titulo
+        FROM emprestimos
+        INNER JOIN usuarios
+            ON emprestimos.USUARIOS_id = usuarios.id
+        INNER JOIN livros
+            ON emprestimos.LIVROS_id = livros.id
+        WHERE emprestimos.id = ?
+    `, [id]);
 
-    return emprestimos[id];
+    return emprestimos[0];
 };
+
 
 const criar = async (
     data_emprestimos,

@@ -1,17 +1,51 @@
 const db = require("../config/database");
 const buscarTodos = async () => {
-    const [livros] = await db.query(
-        "SELECT * FROM livros"
-    );
+    const [livros] = await db.query(`
+        SELECT
+            livros.id,
+            livros.titulo,
+            livros.isbn,
+            livros.ano_publicacao,
+            livros.numero_paginas,
+            livros.sinopse,
+            autores.nome_completo AS autor,
+            generos.nome AS genero
+        FROM livros
+        INNER JOIN autores_has_livros
+            ON livros.id = autores_has_livros.LIVROS_id
+        INNER JOIN autores
+            ON autores.id = autores_has_livros.AUTORES_id
+        INNER JOIN livros_has_generos
+            ON livros.id = livros_has_generos.LIVROS_id
+        INNER JOIN generos
+            ON generos.id = livros_has_generos.GENEROS_id
+    `);
 
     return livros;
 };
 
 const buscarPorId = async (id) => {
-    const [livros] = await db.query(
-        "SELECT * FROM livros WHERE id = ?",
-        [id]
-    );
+    const [livros] = await db.query(`
+        SELECT
+            livros.id,
+            livros.titulo,
+            livros.isbn,
+            livros.ano_publicacao,
+            livros.numero_paginas,
+            livros.sinopse,
+            autores.nome_completo AS autor,
+            generos.nome AS genero
+        FROM livros
+        JOIN autores_has_livros
+            ON livros.id = autores_has_livros.LIVROS_id
+        JOIN autores
+            ON autores.id = autores_has_livros.AUTORES_id
+        JOIN livros_has_generos
+            ON livros.id = livros_has_generos.LIVROS_id
+        JOIN generos
+            ON generos.id = livros_has_generos.GENEROS_id
+        WHERE livros.id = ?
+    `,[id]);
 
     return livros[0];
 };
