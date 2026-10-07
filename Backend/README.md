@@ -21,11 +21,17 @@ Também são utilizados relacionamentos entre as tabelas do banco de dados por m
 ## 🛠️ Tecnologias
 
 - Node.js
+- vscode
 - Express
 - MySQL
 - MySQL2
 - JavaScript
 - dotenv
+    dotenv": "^18.0.5",
+        "express": "^5.2.1",
+        "mysql2": "^3.24.5",
+        "node": "^22.23.3",
+        "nodemon": "^3.1.14"
 - Postman ou Insomnia
 
 ---
@@ -42,6 +48,7 @@ npm install
 
 ## Caso seja necessário instalar manualmente:
 npm install express mysql2 dotenv
+
 ---
 
 ## ⚙️ Configuração
@@ -84,7 +91,7 @@ usuarios
 emprestimos
 autores_has_livros
 livros_has_generos
----
+
 ### Relacionamento entre autores e livros
 autores
     ↓
