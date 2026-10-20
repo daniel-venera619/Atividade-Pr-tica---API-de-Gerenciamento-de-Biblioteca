@@ -1,95 +1,54 @@
-const db = require("../config/database");
+const bd = require("../config/database");
 
-const buscarTodos = async () => {
-    const [usuarios] = await db.query(
-        "SELECT * FROM usuarios"
-    );
+async function buscarTodos() {
+    const sql = `SELECT id, nome_completo, data_aniversario, email, phone_number 
+    FROM usuarios`;
+    const [resultado] = await bd.execute(sql);
 
-    return usuarios;
+    return resultado;
 };
 
+async function buscarPorId(id) {
+    const sql = `SELECT * FROM usuarios WHERE id = ?`;
+    const [resultado] = await bd.execute(sql, [id]);
 
-const buscarPorId = async (id) => {
-    const [usuarios] = await db.query(
-        "SELECT * FROM usuarios WHERE id = ?",
-        [id]
-    );
-
-    return usuarios[0];
+    return resultado[0];
 };
 
-const criar = async (
-    nome_completo,
-    cpf,
-    email,
-    telefone,
-    data_nascimento    
-) => {
-   const [usuario] = await db.query(
-        `INSERT INTO usuarios
-        (nome_completo, cpf, email, telefone, data_nascimento)
-        VALUES (?, ?, ?, ?, ?)`,
-        [
-            nome_completo,
-            cpf,
-            email,
-            telefone,
-            data_nascimento
-        ]
-    );
+async function criar({ cpf, cpfIv, cpfTag, nomeCompleto, dataAniversario, email, telefone, senhaHash, senhaSalt }) {
+    const sql = `INSERT INTO usuarios( 
+    cpf, 
+    cpf_iv, 
+    cpf_tag, 
+    nome_completo, 
+    data_aniversario, 
+    email, 
+    phone_number,
+    senha_hash,
+    senha_salt )
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
-    return {
-        id: usuario.insertId,
-        nome_completo,
+    const [resultado] = await bd.execute(sql, [
         cpf,
+        cpfIv,
+        cpfTag,
+        nomeCompleto,
+        dataAniversario,
         email,
         telefone,
-        data_nascimento
-    };          
-    
+        senhaHash,
+        senhaSalt
+    ]);
+
+    return resultado;
 };
 
-const editar = async (
-    id,
-    nome_completo,
-    cpf,
-    email,
-    telefone,
-    data_nascimento
-) => {
-    await db.query(
-        `UPDATE usuarios
-        SET nome_completo = ?,
-            cpf = ?,
-            email = ?,
-            telefone = ?,
-            data_nascimento = ?
-        WHERE id = ?`,
-        [
-            nome_completo,
-            cpf,
-            email,
-            telefone,
-            data_nascimento,
-            id
-        ]
-    );
-
-    return {
-        id,
-        nome_completo,
-        cpf,
-        email,
-        telefone,
-        data_nascimento
-    };
+async function editar(){
 };
 
-const excluir = async (id) => {
-    const [resultado] = await db.query(
-        "DELETE FROM usuarios WHERE id = ?",
-        [id]
-    );
+async function excluir(id) {
+    const sql = `DELETE FROM usuarios WHERE id = ?`;
+    const [resultado] = await bd.execute(sql, [id]);
 
     return resultado.affectedRows;
 };

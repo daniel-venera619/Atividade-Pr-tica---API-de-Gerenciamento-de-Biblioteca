@@ -30,14 +30,23 @@ CREATE TABLE generos (
 
 CREATE TABLE usuarios (
     id INT AUTO_INCREMENT PRIMARY KEY, -- Adicionado conforme o diagrama
-    nome_completo VARCHAR(150) NOT NULL,
-    cpf VARCHAR(20) NOT NULL, 
-    email VARCHAR(150) NOT NULL, 
-    telefone VARCHAR(20),
-    data_nascimento DATE,
-    CONSTRAINT cpf_UNIQUE UNIQUE (cpf),
-    CONSTRAINT email_UNIQUE UNIQUE (email),
-    CONSTRAINT telefone_UNIQUE UNIQUE (telefone)
+	
+    -- Campos estruturados para criptografia do CPF (ex: AES-GCM)
+    cpf VARBINARY(32) NOT NULL,
+    cpf_iv BINARY(12) NOT NULL,
+    cpf_tag BINARY(16) NOT NULL,
+	 
+     -- Dados cadastrais do usuário
+	nome_completo VARCHAR(150) NOT NULL,
+    data_aniversario DATE NOT NULL,
+    email VARCHAR(200) NOT NULL UNIQUE,
+    phone_number BIGINT NOT NULL UNIQUE,
+	
+    -- Campos estruturados para segurança de senha (Hashing + Salt)
+    senha_hash BINARY(64) NOT NULL,
+    senha_salt BINARY(16) NOT NULL
+    
+   
 );
 
 -- =========================================
@@ -109,11 +118,11 @@ INSERT INTO generos (nome) VALUES
 -- INSERINDO USUÁRIOS
 -- =========================================
 
-INSERT INTO usuarios (nome_completo, cpf, email, telefone, data_nascimento) VALUES
-('João da Silva', '123.456.789-00', 'joao@gmail.com', '47999999999', '1998-05-15'), -- ID 1
-('Maria Oliveira', '987.654.321-00', 'maria@gmail.com', '47988888888', '2000-08-20'), -- ID 2
-('Pedro Santos', '456.789.123-00', 'pedro@gmail.com', '47977777777', '1995-03-10'), -- ID 3
-('Ana Souza', '321.654.987-00', 'ana@gmail.com', '47966666666', '2002-11-25'); -- ID 4
+-- INSERT INTO usuarios (nome_completo, cpf, email, telefone, data_nascimento) VALUES
+-- ('João da Silva', '123.456.789-00', 'joao@gmail.com', '47999999999', '1998-05-15'), -- ID 1
+-- ('Maria Oliveira', '987.654.321-00', 'maria@gmail.com', '47988888888', '2000-08-20'), -- ID 2
+-- ('Pedro Santos', '456.789.123-00', 'pedro@gmail.com', '47977777777', '1995-03-10'), -- ID 3
+-- ('Ana Souza', '321.654.987-00', 'ana@gmail.com', '47966666666', '2002-11-25'); -- ID 4
 
 -- =========================================
 -- VÍNCULO: AUTORES E LIVROS (autores_has_livros)
