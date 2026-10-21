@@ -154,3 +154,59 @@ INSERT INTO emprestimos (data_emprestimos, data_devolucao, USUARIOS_id, LIVROS_i
 ('2026-03-01', '2026-03-15', 1, 4), -- João pegou Harry Potter (Já devolvido)
 ('2026-03-10', NULL, 2, 5),         -- Maria pegou 1984 (Ainda não devolveu)
 ('2026-03-12', NULL, 3, 1);         -- Pedro pegou Dom Casmurro (Ainda não devolveu)
+
+-- Exemplos para adicionar usuarios no postman
+
+-- Exemplo 1
+
+{
+  "nomeCompleto": "Daniel Venera",
+  "dataAniversario": "1995-10-19",
+  "email": "daniel.venera@email.com",
+  "telefone": 47999999999,
+  "cpf": "12345678901",
+  "senha": "MinhaSenha123"
+}
+
+-- Exemplo 2
+
+{
+  "nomeCompleto": "Mariana Costa",
+  "dataAniversario": "1998-04-12",
+  "email": "mariana.costa@example.com",
+  "telefone": 47988887777,
+  "cpf": "52984173620",
+  "senha": "MarianaTeste456!"
+}
+
+-- Exemplo 3
+
+{
+  "nomeCompleto": "Lucas Ferreira",
+  "dataAniversario": "2001-07-23",
+  "email": "lucas.ferreira@example.com",
+  "telefone": 48977776666,
+  "cpf": "68421957305",
+  "senha": "LucasTeste789!"
+}
+
+-- Exemplo 4
+
+{
+  "nomeCompleto": "Beatriz Almeida",
+  "dataAniversario": "1996-11-08",
+  "email": "beatriz.almeida@example.com",
+  "telefone": 47966665555,
+  "cpf": "31758294601",
+  "senha": "BeatrizTeste321!"
+}
+
+-- Exemplo de Criação de emprestimo com validação de senha
+
+{
+  "data_emprestimos": "2026-10-20",
+  "data_devolucao": null,
+  "USUARIOS_id": 1,
+  "LIVROS_id": 4,
+  "senha": "MinhaSenha123"
+}

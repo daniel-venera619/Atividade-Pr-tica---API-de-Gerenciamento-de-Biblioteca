@@ -40,14 +40,20 @@ const buscarPorID = async (id) => {
 };
 
 
+
 const criar = async (
     data_emprestimos,
     data_devolucao,
     USUARIOS_id,
     LIVROS_id
 ) => {
+    console.log("dataEmprestimo", data_emprestimos);
+    console.log("dataDevolução", data_devolucao);
+    console.log("IdUsuario", USUARIOS_id);
+    console.log("IdLivros", LIVROS_id);
+    
     const [emprestimo] = await db.query(
-        `ISERT INTO emprestimos
+        `INSERT INTO emprestimos
         (data_emprestimos, data_devolucao, USUARIOS_id, LIVROS_id)
         VALUES (?, ?, ?, ?)`,
         [
@@ -59,12 +65,12 @@ const criar = async (
     );
 
     return {
-        id:emprestimo.insertId,
+        id: emprestimo.insertId,
         data_emprestimos,
         data_devolucao,
         USUARIOS_id,
         LIVROS_id
-    }
+    };
 };
 
 const editar = async (

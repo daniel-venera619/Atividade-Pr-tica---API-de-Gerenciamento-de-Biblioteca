@@ -25,7 +25,7 @@ function descriptografar({ivArmazenado, tagArmazenado, valorArmazenado}){
     const decipher = crypto.createDecipheriv(ALGORITIMO, CHAVE, ivArmazenado);
     decipher.setAuthTag(tagArmazenado);
 
-    const valorDescriptografado = Buffer.concat([decipher.update(valorArmazenado), decipher.final]);
+    const valorDescriptografado = Buffer.concat([decipher.update(valorArmazenado), decipher.final()]);
 
     return valorDescriptografado.toString("utf8");
 };

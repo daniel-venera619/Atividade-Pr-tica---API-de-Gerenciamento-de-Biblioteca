@@ -1,4 +1,6 @@
 const emprestimosModel = require("../models/emprestimosModel");
+const usuariosModel = require("../models/usuariosModel");
+const { verificarHashSenha} = require("../utils/crypto/hash");
 
 const buscarEmprestimos = async (req, res) => {
     const emprestimos = await emprestimosModel.buscarTodos();
@@ -24,17 +26,46 @@ const criarEmprestimo = async (req, res) => {
         data_emprestimos,
         data_devolucao,
         USUARIOS_id,
-        LIVROS_id
+        LIVROS_id,
+        senha
     } = req.body;
 
-   const emprestimo = await emprestimosModel.criar(
-        data_emprestimos,
-        data_devolucao,
-        USUARIOS_id,
-        LIVROS_id
-    );
+    try {
+        const dadosSenha = await usuariosModel.buscarHashSenhaPorId(USUARIOS_id);
 
-    res.status(201).json(emprestimo);
+            if (!dadosSenha){
+                return res.status(404).json({
+                    mensagem: "Usuário não encontrado"
+                });
+            }
+
+            const senhaValida = await verificarHashSenha(
+                senha,
+                dadosSenha
+            );
+
+            if (!senhaValida) {
+                return res.status(401).json({
+                    mensagem: "Senha incorreta" 
+                });
+            }
+        const emprestimo = await emprestimosModel.criar(
+            data_emprestimos,
+            data_devolucao,
+            USUARIOS_id,
+            LIVROS_id
+        );
+
+        res.status(201).json(emprestimo);    
+    } catch (error) {
+        console.error("Erro ao criar empréstimo:", error.message);
+
+        return res.status(500).json({
+            mensagem: "Erro ao criar empréstimo"
+        });
+    }
+
+   
 };
 
 const editarEmprestimo = async (req, res) => {

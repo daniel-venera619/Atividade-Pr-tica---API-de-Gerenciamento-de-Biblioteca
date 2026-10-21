@@ -583,3 +583,50 @@ biblioteca/
 ## ✅ Status do projeto
 
 Projeto desenvolvido para fins acadêmicos, com implementação de uma API REST para gerenciamento de uma biblioteca utilizando Node.js, Express e MySQL.
+
+## 🔐🔐Segurança de Senhas e Validação de Empréstimos🔐🔐
+
+## Criação e Armazenamento de Senhas
+
+- As senhas dos usuários são protegidas utilizando o algoritmo `crypto.scrypt` do Node.js.
+- Para cada senha, é gerado um salt aleatório de 16 bytes.
+- O hash gerado possui 64 bytes e é armazenado no banco de dados junto ao salt.
+- As senhas não são armazenadas em texto puro.
+
+## Validação de Senha nos Empréstimos
+
+1. Recebe os dados do empréstimo e a senha informada.
+2. Busca o hash e o salt do usuário no banco de dados.
+3. Recalcula o hash da senha informada utilizando o salt armazenado.
+4. Compara os hashes utilizando `crypto.timingSafeEqual()`.
+5. Se a senha estiver correta, o empréstimo é cadastrado.
+6. Se a senha estiver incorreta, o cadastro é bloqueado.
+
+## Respostas da API
+
+| Status HTTP | Descrição |
+|---|---|
+| `201 Created` | Empréstimo cadastrado com sucesso. |
+| `401 Unauthorized` | Senha incorreta. |
+| `404 Not Found` | Usuário não encontrado. |
+| `500 Internal Server Error` | Erro interno ao processar a requisição. |
+
+## Teste no Postman
+
+Envie uma requisição `POST` para a rota de empréstimos, utilizando JSON no corpo da requisição.
+
+### Exemplo de JSON
+
+```json
+{
+  "data_emprestimos": "2026-10-20",
+  "data_devolucao": null,
+  "USUARIOS_id": 1,
+  "LIVROS_id": 4,
+  "senha": "sua_senha"
+}
+```
+
+## Objetivo
+
+Garantir maior segurança no gerenciamento de usuários e empréstimos, protegendo as senhas armazenadas e exigindo a validação da senha antes de registrar um novo empréstimo.

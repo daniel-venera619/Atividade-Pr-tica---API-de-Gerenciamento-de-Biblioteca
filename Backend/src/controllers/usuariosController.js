@@ -23,7 +23,7 @@ async function buscarPorId(req, res) {
 
         const cpf = descriptografar({
             ivArmazenado: usuario.cpf_iv,
-            tagArmazenada: usuario.cpf_tag,
+            tagArmazenado: usuario.cpf_tag,
             valorArmazenado: usuario.cpf
         });
 
@@ -50,17 +50,7 @@ async function criar(req, res) {
         const {cpf, nomeCompleto, dataAniversario, email, telefone, senha} = req.body;
         const {salt, hash} = await gerarHashSenha(senha);
         const {iv, tag, valorCriptografado:cpfCriptografado} = criptografar(cpf);
-        console.log("cpf: ", cpf)
-        console.log("nomeCompleto: ", nomeCompleto)
-        console.log("dataAniversario: ", dataAniversario)
-        console.log("email: ", email)
-        console.log("telefone: ", telefone)
-        console.log("senha: ", senha)
-        console.log("hash", hash)
-        console.log("iv: ", iv)
-        console.log("tag: ", tag)
-        console.log("cpfCriptografado: ", cpfCriptografado)
-        
+            
 
         await usuariosModel.criar({
             cpf: cpfCriptografado,

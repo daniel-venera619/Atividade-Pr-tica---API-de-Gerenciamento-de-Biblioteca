@@ -1,3 +1,4 @@
+const conection = require("../config/database");
 const bd = require("../config/database");
 
 async function buscarTodos() {
@@ -53,10 +54,24 @@ async function excluir(id) {
     return resultado.affectedRows;
 };
 
+async function buscarHashSenhaPorId(id) {
+    const sql = `SELECT senha_hash, senha_salt FROM usuarios WHERE id = ?`;
+    const [resultado] = await conection.execute(sql, [id]);
+
+        if (resultado.length === 0){
+            return null;
+        }
+    return{
+        saltArmazenado: resultado[0].senha_salt,
+        hashSenhaArmazenada: resultado[0].senha_hash
+    };    
+};
+
 module.exports = {
     buscarTodos,
     buscarPorId,
     criar,
     editar,
-    excluir
+    excluir,
+    buscarHashSenhaPorId
 };
