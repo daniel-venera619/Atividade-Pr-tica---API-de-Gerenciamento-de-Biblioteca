@@ -44,8 +44,38 @@ async function criar({ cpf, cpfIv, cpfTag, nomeCompleto, dataAniversario, email,
     return resultado;
 };
 
-async function editar(){
+async function editar(id, dados){
+    const camposPermitidos = [
+        "cpf",
+        "cpf_iv",
+        "cpf_tag",
+        "nome_completo",
+        "data_aniversario",
+        "email",
+        "phone_number ",
+        "senha_salt",
+        "senha_hash"
+    ];
+    const campos = Object.keys(dados);
+    // campos.some() ---> verifica se pelo menos UM campo atende x condição
+    // camposPermitidos.Includes(campo) ---> verificar se o campo existe na lista
+    // ! ---> valor invertido 
+    if(campos.length ===0 || campos.some(campo => !camposPermitidos.includes(campo))){
+        throw new Error("Variaveis de atualização invalidos");
+    };
+
+    const atribuicoes = campos.map(campo => `${campo} = ?`).join(",");
+    const valores = campos.map(campo => dados[campo]);
+    const sql = `
+        UPDATE usuarios
+        SET ${atribuicoes}
+        WHERE id = ?;
+    `;
+    const [resultado] = await bd.execute(sql, [...valores, id]);
+
+    return resultado;
 };
+
 
 async function excluir(id) {
     const sql = `DELETE FROM usuarios WHERE id = ?`;
