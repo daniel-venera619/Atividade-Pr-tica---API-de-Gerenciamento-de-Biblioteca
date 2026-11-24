@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gerenciamento de Biblioteca</title>
+    <link rel="stylesheet" href="../styles/paginaInicial.css" />
+    <script src="../scripts/paginaInicial.js" defer></script>
+  </head>
+  <body>
+    <header>
+      <h1>MenteLendo</h1>
+      <h2>Prazer em cada página.</h2>
+      <h3>Uma biblioteca para quem gosta de ir além da capa. Não julgue pelo tamanho do livro.</h3>
+    </header>
+
+    <main class="pagina">
+      <figure class="cartao-imagem">
+        <img
+          src="../utils/Emblema MenteLendo na Biblioteca.png"
+          alt="Bruxa lendo em uma biblioteca mágica"
+        />
+      </figure>
+
+      <div class="painel-direito">
+        <section id="introducao" class="cartao-apresentacao">
+          <p>
+            Bem-vindo ao MenteLendo, uma biblioteca feita para quem sabe que uma boa
+            história vai muito além da capa. Aqui, cada livro é uma nova descoberta,
+            cada página desperta a imaginação e cada leitura proporciona uma experiência
+            única.
+          </p>
+          <strong>Não julgue pelo tamanho do livro.</strong>
+          <span>O que importa é o prazer de descobrir o que existe dentro dele.</span>
+        </section>
+
+        <section id="infoLogin" class="cartao-login">
+          <p class="mensagem-inicial">Use seu usuário e senha para entrar no sistema.</p>
+
+          <form id="formLogin">
+            <label for="usuario">Email</label>
+            <input type="email" id="usuario" name="usuario" autocomplete="username" required />
+
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" autocomplete="current-password" required />
+
+            <button type="submit" id="login">Login</button>
+          </form>
+
+          <p id="mensagemLogin" role="status" aria-live="polite"></p>
+          <p class="cadastro">Não possui uma conta? <a href="#">Cadastrar-se</a></p>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

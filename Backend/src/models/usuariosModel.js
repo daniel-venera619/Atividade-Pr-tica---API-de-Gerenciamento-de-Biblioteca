@@ -16,6 +16,13 @@ async function buscarPorId(id) {
     return resultado[0];
 };
 
+async function buscarPorEmail(email) {
+    const sql = `SELECT * FROM usuarios WHERE email = ?`;
+    const [resultado] = await bd.execute(sql, [email]);
+
+    return resultado[0];
+};
+
 async function criar({ cpf, cpfIv, cpfTag, nomeCompleto, dataAniversario, email, telefone, senhaHash, senhaSalt }) {
     const sql = `INSERT INTO usuarios( 
     cpf, 
@@ -100,6 +107,7 @@ async function buscarHashSenhaPorId(id) {
 module.exports = {
     buscarTodos,
     buscarPorId,
+    buscarPorEmail,
     criar,
     editar,
     excluir,

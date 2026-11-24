@@ -143,10 +143,56 @@ async function excluir(req, res) {
     };
 };
 
+async function login(req, res) {
+    try {
+        const { email, senha } = req.body;
+
+        if (!email || !senha) {
+            return res.status(400).json({
+                error: "Informe o email e a senha"
+            });
+        };
+
+        const usuario = await usuariosModel.buscarPorEmail(email);
+
+        if (!usuario) {
+            return res.status(401).json({
+                error: "Email ou senha inválidos"
+            });
+        };
+
+        const senhaValida = await verificarHashSenha(senha, {
+            saltArmazenado: usuario.senha_salt,
+            hashSenhaArmazenada: usuario.senha_hash
+        });
+
+        if (!senhaValida) {
+            return res.status(401).json({
+                error: "Email ou senha inválidos"
+            });
+        };
+
+        return res.json({
+            mensagem: "Login realizado com sucesso",
+            usuario: {
+                id: usuario.id,
+                nomeCompleto: usuario.nome_completo,
+                email: usuario.email
+            }
+        });
+    } catch(error) {
+        console.error(error);
+        return res.status(500).json({
+            error: "Erro ao realizar login"
+        });
+    };
+};
+
 module.exports = {
     buscarTodos,
     buscarPorId,
     editar,
     criar,
-    excluir
+    excluir,
+    login
 };
